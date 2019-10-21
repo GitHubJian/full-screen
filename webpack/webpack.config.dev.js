@@ -65,7 +65,7 @@ module.exports = {
       'process.env.VUE_ENV': '"client"',
       'process.env.buildTime': JSON.stringify(Date.now())
     }),
-    new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
+    new webpack.EnvironmentPlugin({NODE_ENV: 'development'}),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.ModuleConcatenationPlugin(),
 

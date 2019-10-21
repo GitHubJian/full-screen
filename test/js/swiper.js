@@ -65,7 +65,7 @@
               }
             }
           },
-          location: { hash: '' }
+          location: {hash: ''}
         }
       : document // eslint-disable-line
 
@@ -386,7 +386,7 @@
       }
       listener.apply(this, eventData)
     }
-    
+
     var events = eventType.split(' ')
     var j
     for (var i = 0; i < this.length; i += 1) {
@@ -1234,7 +1234,7 @@
     }
   }
 
-  var staticAccessors = { components: { configurable: true } }
+  var staticAccessors = {components: {configurable: true}}
 
   SwiperClass.prototype.on = function on(events, handler, priority) {
     var self = this
@@ -1480,7 +1480,6 @@
   }
 
   function updateSlides() {
-    debugger
     var swiper = this
     var params = swiper.params
 
@@ -1537,9 +1536,9 @@
 
     // reset margins
     if (rtl) {
-      slides.css({ marginLeft: '', marginTop: '' })
+      slides.css({marginLeft: '', marginTop: ''})
     } else {
-      slides.css({ marginRight: '', marginBottom: '' })
+      slides.css({marginRight: '', marginBottom: ''})
     }
 
     var slidesNumberEvenToRows
@@ -1760,7 +1759,7 @@
       wrongRTL &&
       (params.effect === 'slide' || params.effect === 'coverflow')
     ) {
-      $wrapperEl.css({ width: swiper.virtualSize + params.spaceBetween + 'px' })
+      $wrapperEl.css({width: swiper.virtualSize + params.spaceBetween + 'px'})
     }
     if (params.setWrapperSize) {
       if (swiper.isHorizontal()) {
@@ -1832,18 +1831,12 @@
     if (params.spaceBetween !== 0) {
       if (swiper.isHorizontal()) {
         if (rtl) {
-          slides
-            .filter(slidesForMargin)
-            .css({ marginLeft: spaceBetween + 'px' })
+          slides.filter(slidesForMargin).css({marginLeft: spaceBetween + 'px'})
         } else {
-          slides
-            .filter(slidesForMargin)
-            .css({ marginRight: spaceBetween + 'px' })
+          slides.filter(slidesForMargin).css({marginRight: spaceBetween + 'px'})
         }
       } else {
-        slides
-          .filter(slidesForMargin)
-          .css({ marginBottom: spaceBetween + 'px' })
+        slides.filter(slidesForMargin).css({marginBottom: spaceBetween + 'px'})
       }
     }
 
@@ -2526,6 +2519,7 @@
     }
 
     var translate = -snapGrid[snapIndex]
+    console.log(123)
 
     // Update progress
     swiper.updateProgress(translate)
@@ -3686,6 +3680,7 @@
   }
 
   function onTouchEnd(event) {
+    debugger
     var swiper = this
     var data = swiper.touchEventsData
 
@@ -4135,7 +4130,7 @@
           touchEvents.start === 'touchstart' &&
           Support.passiveListener &&
           params.passiveListeners
-            ? { passive: true, capture: false }
+            ? {passive: true, capture: false}
             : false
         el.addEventListener(
           touchEvents.start,
@@ -4145,9 +4140,7 @@
         el.addEventListener(
           touchEvents.move,
           swiper.onTouchMove,
-          Support.passiveListener
-            ? { passive: false, capture: capture }
-            : capture
+          Support.passiveListener ? {passive: false, capture: capture} : capture
         )
         el.addEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener)
         if (touchEvents.cancel) {
@@ -4209,7 +4202,7 @@
           touchEvents.start === 'onTouchStart' &&
           Support.passiveListener &&
           params.passiveListeners
-            ? { passive: true, capture: false }
+            ? {passive: true, capture: false}
             : false
         el.removeEventListener(
           touchEvents.start,
@@ -4441,7 +4434,7 @@
     $el.removeClass(classNames.join(' '))
   }
 
-  var classes = { addClasses: addClasses, removeClasses: removeClasses }
+  var classes = {addClasses: addClasses, removeClasses: removeClasses}
 
   function loadImage(imageEl, src, srcset, sizes, checkForComplete, callback) {
     var image
@@ -4532,7 +4525,7 @@
     }
   }
 
-  var checkOverflow$1 = { checkOverflow: checkOverflow }
+  var checkOverflow$1 = {checkOverflow: checkOverflow}
 
   var defaults = {
     init: true,
@@ -4685,7 +4678,6 @@
   var extendedDefaults = {}
 
   var Swiper = /*@__PURE__*/ (function(SwiperClass) {
-    debugger
     function Swiper() {
       var assign
 
@@ -4728,7 +4720,7 @@
       if (typeof swiper.modules === 'undefined') {
         swiper.modules = {}
       }
-      debugger
+
       Object.keys(swiper.modules).forEach(function(moduleName) {
         var module = swiper.modules[moduleName]
         if (module.params) {
@@ -4741,7 +4733,7 @@
             return
           }
           if (params[moduleParamName] === true) {
-            params[moduleParamName] = { enabled: true }
+            params[moduleParamName] = {enabled: true}
           }
           if (
             typeof params[moduleParamName] === 'object' &&
@@ -4750,7 +4742,7 @@
             params[moduleParamName].enabled = true
           }
           if (!params[moduleParamName]) {
-            params[moduleParamName] = { enabled: false }
+            params[moduleParamName] = {enabled: false}
           }
         }
       })
@@ -4778,7 +4770,7 @@
       if ($el.length > 1) {
         var swipers = []
         $el.each(function(index, containerEl) {
-          var newParams = Utils.extend({}, params, { el: containerEl })
+          var newParams = Utils.extend({}, params, {el: containerEl})
           swipers.push(new Swiper(newParams))
         })
         return swipers
@@ -4930,10 +4922,10 @@
     Swiper.prototype.constructor = Swiper
 
     var staticAccessors = {
-      extendedDefaults: { configurable: true },
-      defaults: { configurable: true },
-      Class: { configurable: true },
-      $: { configurable: true }
+      extendedDefaults: {configurable: true},
+      defaults: {configurable: true},
+      Class: {configurable: true},
+      $: {configurable: true}
     }
 
     Swiper.prototype.slidesPerViewDynamic = function slidesPerViewDynamic() {
@@ -4987,7 +4979,7 @@
         swiper.setBreakpoint()
       }
       swiper.updateSize()
-      debugger
+
       swiper.updateSlides()
       swiper.updateProgress()
       swiper.updateSlidesClasses()
@@ -5378,7 +5370,7 @@
       })
 
       // Observe wrapper
-      swiper.observer.attach(swiper.$wrapperEl[0], { attributes: false })
+      swiper.observer.attach(swiper.$wrapperEl[0], {attributes: false})
     },
     destroy: function destroy() {
       var swiper = this
@@ -7134,11 +7126,11 @@
       var target = $el[0]
       var activeListener =
         Support.passiveListener && params.passiveListeners
-          ? { passive: false, capture: false }
+          ? {passive: false, capture: false}
           : false
       var passiveListener =
         Support.passiveListener && params.passiveListeners
-          ? { passive: true, capture: false }
+          ? {passive: true, capture: false}
           : false
       if (!Support.touch) {
         target.addEventListener(
@@ -7187,11 +7179,11 @@
       var target = $el[0]
       var activeListener =
         Support.passiveListener && params.passiveListeners
-          ? { passive: false, capture: false }
+          ? {passive: false, capture: false}
           : false
       var passiveListener =
         Support.passiveListener && params.passiveListeners
-          ? { passive: true, capture: false }
+          ? {passive: true, capture: false}
           : false
       if (!Support.touch) {
         target.removeEventListener(
@@ -7993,10 +7985,10 @@
         swiper.touchEvents.start === 'touchstart' &&
         Support.passiveListener &&
         swiper.params.passiveListeners
-          ? { passive: true, capture: false }
+          ? {passive: true, capture: false}
           : false
       var activeListenerWithCapture = Support.passiveListener
-        ? { passive: false, capture: true }
+        ? {passive: false, capture: true}
         : true
 
       // Scale image
@@ -8069,10 +8061,10 @@
         swiper.touchEvents.start === 'touchstart' &&
         Support.passiveListener &&
         swiper.params.passiveListeners
-          ? { passive: true, capture: false }
+          ? {passive: true, capture: false}
           : false
       var activeListenerWithCapture = Support.passiveListener
-        ? { passive: false, capture: true }
+        ? {passive: false, capture: true}
         : true
 
       // Scale image
@@ -9119,7 +9111,7 @@
       var total = pathArray.length
       var key = pathArray[total - 2]
       var value = pathArray[total - 1]
-      return { key: key, value: value }
+      return {key: key, value: value}
     },
     setHistory: function setHistory(key, index) {
       var swiper = this
@@ -9136,9 +9128,9 @@
         return
       }
       if (swiper.params.history.replaceState) {
-        win.history.replaceState({ value: value }, null, value)
+        win.history.replaceState({value: value}, null, value)
       } else {
-        win.history.pushState({ value: value }, null, value)
+        win.history.pushState({value: value}, null, value)
       }
     },
     slugify: function slugify(text) {
@@ -9700,7 +9692,7 @@
             $cubeShadowEl = $('<div class="swiper-cube-shadow"></div>')
             $wrapperEl.append($cubeShadowEl)
           }
-          $cubeShadowEl.css({ height: swiperWidth + 'px' })
+          $cubeShadowEl.css({height: swiperWidth + 'px'})
         } else {
           $cubeShadowEl = $el.find('.swiper-cube-shadow')
           if ($cubeShadowEl.length === 0) {
