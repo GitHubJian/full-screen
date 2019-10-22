@@ -4852,6 +4852,7 @@
         touchEvents: (function touchEvents() {
           var touch = ['touchstart', 'touchmove', 'touchend', 'touchcancel']
           var desktop = ['mousedown', 'mousemove', 'mouseup']
+          debugger
           if (Support.pointerEvents) {
             desktop = ['pointerdown', 'pointermove', 'pointerup']
           } else if (Support.prefixedPointerEvents) {
