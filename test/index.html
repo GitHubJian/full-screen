@@ -63,8 +63,18 @@
 
     <script>
       var swiper = new Swiper('.swiper-container', {
-        direction: 'vertical'
+        direction: 'vertical',
+        on: {
+          update: function() {}
+        }
       })
+
+      setTimeout(function() {
+        swiper.addSlide(
+          window.Infinity,
+          '<div class="fs-slide swiper-slide">Slide X</div>'
+        )
+      }, 3e3)
     </script>
   </body>
 </html>

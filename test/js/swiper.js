@@ -1339,6 +1339,7 @@
     if (!instance.modules) {
       return
     }
+    
     Object.keys(instance.modules).forEach(function(moduleName) {
       var module = instance.modules[moduleName]
       // Extend params
@@ -1355,6 +1356,7 @@
     if (!instance.modules) {
       return
     }
+    
     Object.keys(instance.modules).forEach(function(moduleName) {
       var module = instance.modules[moduleName]
       var moduleParams = modulesParams[moduleName] || {}
@@ -1496,7 +1498,7 @@
     var snapGrid = []
     var slidesGrid = []
     var slidesSizesGrid = []
-
+    
     function slidesForMargin(slideIndex) {
       if (!params.cssMode) {
         return true
@@ -3054,6 +3056,7 @@
       swiper.loopCreate()
     }
     if (!(params.observer && Support.observer)) {
+      
       swiper.update()
     }
   }
@@ -3088,6 +3091,7 @@
   }
 
   function addSlide(index, slides) {
+    
     var swiper = this
     var $wrapperEl = swiper.$wrapperEl
     var params = swiper.params
@@ -3417,6 +3421,7 @@
   }
 
   function onTouchMove(event) {
+    
     var swiper = this
     var data = swiper.touchEventsData
     var params = swiper.params
@@ -3442,52 +3447,52 @@
       touches.startY = pageY
       return
     }
-    if (!swiper.allowTouchMove) {
-      // isMoved = true;
-      swiper.allowClick = false
-      if (data.isTouched) {
-        Utils.extend(touches, {
-          startX: pageX,
-          startY: pageY,
-          currentX: pageX,
-          currentY: pageY
-        })
-        data.touchStartTime = Utils.now()
-      }
-      return
-    }
-    if (data.isTouchEvent && params.touchReleaseOnEdges && !params.loop) {
-      if (swiper.isVertical()) {
-        // Vertical
-        if (
-          (pageY < touches.startY &&
-            swiper.translate <= swiper.maxTranslate()) ||
-          (pageY > touches.startY && swiper.translate >= swiper.minTranslate())
-        ) {
-          data.isTouched = false
-          data.isMoved = false
-          return
-        }
-      } else if (
-        (pageX < touches.startX && swiper.translate <= swiper.maxTranslate()) ||
-        (pageX > touches.startX && swiper.translate >= swiper.minTranslate())
-      ) {
-        return
-      }
-    }
-    if (data.isTouchEvent && doc.activeElement) {
-      if (e.target === doc.activeElement && $(e.target).is(data.formElements)) {
-        data.isMoved = true
-        swiper.allowClick = false
-        return
-      }
-    }
-    if (data.allowTouchCallbacks) {
-      swiper.emit('touchMove', e)
-    }
-    if (e.targetTouches && e.targetTouches.length > 1) {
-      return
-    }
+    // if (!swiper.allowTouchMove) {
+    //   // isMoved = true;
+    //   swiper.allowClick = false
+    //   if (data.isTouched) {
+    //     Utils.extend(touches, {
+    //       startX: pageX,
+    //       startY: pageY,
+    //       currentX: pageX,
+    //       currentY: pageY
+    //     })
+    //     data.touchStartTime = Utils.now()
+    //   }
+    //   return
+    // }
+    // if (data.isTouchEvent && params.touchReleaseOnEdges && !params.loop) {
+    //   if (swiper.isVertical()) {
+    //     // Vertical
+    //     if (
+    //       (pageY < touches.startY &&
+    //         swiper.translate <= swiper.maxTranslate()) ||
+    //       (pageY > touches.startY && swiper.translate >= swiper.minTranslate())
+    //     ) {
+    //       data.isTouched = false
+    //       data.isMoved = false
+    //       return
+    //     }
+    //   } else if (
+    //     (pageX < touches.startX && swiper.translate <= swiper.maxTranslate()) ||
+    //     (pageX > touches.startX && swiper.translate >= swiper.minTranslate())
+    //   ) {
+    //     return
+    //   }
+    // }
+    // if (data.isTouchEvent && doc.activeElement) {
+    //   if (e.target === doc.activeElement && $(e.target).is(data.formElements)) {
+    //     data.isMoved = true
+    //     swiper.allowClick = false
+    //     return
+    //   }
+    // }
+    // if (data.allowTouchCallbacks) {
+    //   swiper.emit('touchMove', e)
+    // }
+    // if (e.targetTouches && e.targetTouches.length > 1) {
+    //   return
+    // }
 
     touches.currentX = pageX
     touches.currentY = pageY
@@ -3545,7 +3550,7 @@
     if (params.touchMoveStopPropagation && !params.nested) {
       e.stopPropagation()
     }
-
+    
     if (!data.isMoved) {
       if (params.loop) {
         swiper.loopFix()
@@ -3680,7 +3685,7 @@
   }
 
   function onTouchEnd(event) {
-    debugger
+    
     var swiper = this
     var data = swiper.touchEventsData
 
@@ -3935,8 +3940,9 @@
       }
       return
     }
-
+    
     // Find current slide
+    debugger
     var stopIndex = 0
     var groupSize = swiper.slidesSizesGrid[0]
     for (var i = 0; i < slidesGrid.length; i += params.slidesPerGroup) {
@@ -4703,7 +4709,7 @@
       if (el && !params.el) {
         params.el = el
       }
-
+      
       SwiperClass.call(this, params)
 
       Object.keys(prototypes).forEach(function(prototypeGroup) {
@@ -4968,6 +4974,7 @@
     }
 
     Swiper.prototype.update = function update() {
+      
       var swiper = this
       if (!swiper || swiper.destroyed) {
         return
@@ -5389,6 +5396,7 @@
       observeSlideChildren: false
     },
     create: function create() {
+      
       var swiper = this
       Utils.extend(swiper, {
         observer: {

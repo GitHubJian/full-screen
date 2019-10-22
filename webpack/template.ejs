@@ -3,7 +3,6 @@
   <head>
     <title><%= htmlWebpackPlugin.options.title %></title>
 
-    <link rel="stylesheet" href="static/css/reset.css" />
     <link rel="stylesheet" href="static/css/swiper.css" />
 
     <style>
@@ -63,8 +62,19 @@
     <script>
       var fullscreen = new FullScreen('.swiper-container', {
         direction: 'vertical',
-        effect: 'cube'
+        on: {
+          update: function() {
+            console.log(12333)
+          }
+        }
       })
+
+      setTimeout(function() {
+        fullscreen.addSlide(
+          window.Infinity,
+          '<div class="fs-slide swiper-slide">Slide X</div>'
+        )
+      }, 2e3)
     </script>
   </body>
 </html>
