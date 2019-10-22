@@ -50,6 +50,7 @@
     <div id="fullscreen" class="fs-container swiper-container">
       <div class="fs-wrapper swiper-wrapper">
         <div class="fs-slide swiper-slide">
+          <div id="btn1">点我</div>
           Slide 1
         </div>
         <div class="fs-slide swiper-slide">
@@ -65,14 +66,19 @@
       var swiper = new Swiper('.swiper-container', {
         direction: 'vertical',
         on: {
-          update: function() {}
+          update: function() {
+            console.log(1)
+          },
+          slideChangeTransitionEnd: function() {
+            alert(this.activeIndex)
+          }
         }
       })
 
       setTimeout(function() {
         swiper.addSlide(
           window.Infinity,
-          '<div class="fs-slide swiper-slide">Slide X</div>'
+          '<div class="fullscreen-slide">Slide X</div>'
         )
       }, 3e3)
     </script>

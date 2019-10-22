@@ -2440,6 +2440,7 @@
   }
 
   function transitionEnd$1(runCallbacks, direction) {
+    debugger
     if (runCallbacks === void 0) runCallbacks = true
 
     var swiper = this
@@ -2602,7 +2603,7 @@
       }
       return true
     }
-
+    debugger
     if (speed === 0) {
       swiper.setTransition(0)
       swiper.setTranslate(translate)

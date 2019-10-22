@@ -44,7 +44,8 @@
         align-items: center;
       }
     </style>
-  <script type="text/javascript" src="/js/fullscreen.js"></script></head>
+    <script type="text/javascript" src="/js/swiper.js"></script>
+  </head>
   <body>
     <div id="fullscreen" class="fs-container swiper-container">
       <div class="fs-wrapper swiper-wrapper">
@@ -63,7 +64,12 @@
     <script>
       var swiper = new Swiper('.swiper-container', {
         direction: 'vertical',
-        effect: 'cube'
+        effect: 'cube',
+        on: {
+          slideChangeTransitionEnd: function() {
+            console.log(this)
+          }
+        }
       })
     </script>
   </body>

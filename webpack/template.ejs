@@ -3,78 +3,64 @@
   <head>
     <title><%= htmlWebpackPlugin.options.title %></title>
 
-    <link rel="stylesheet" href="static/css/swiper.css" />
+    <link rel="stylesheet" href="static/css/fullscreen.css" />
 
     <style>
-      html,
-      body {
-        position: relative;
-        height: 100%;
-      }
-      body {
-        background: #eee;
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        color: #000;
-        margin: 0;
-        padding: 0;
-      }
-      .swiper-container {
-        width: 100%;
-        height: 100%;
-      }
-      .swiper-slide {
-        text-align: center;
-        font-size: 18px;
+      .fullscreen-slide {
+        font-size: 40px;
         background: #fff;
-
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
       }
     </style>
   </head>
   <body>
-    <div id="fullscreen" class="fs-container swiper-container">
-      <div class="fs-wrapper swiper-wrapper">
-        <div class="fs-slide swiper-slide">
+    <div id="fullscreen" class="fullscreen-container fullscreen-container">
+      <div class="fullscreen-wrapper">
+        <div class="fullscreen-slide">
+          <div id="btn1">点我</div>
+          Slide 0
+        </div>
+        <div class="fullscreen-slide">
           Slide 1
         </div>
-        <div class="fs-slide swiper-slide">
+        <div class="fullscreen-slide">
           Slide 2
-        </div>
-        <div class="fs-slide swiper-slide">
-          Slide 3
         </div>
       </div>
     </div>
 
     <script>
-      var fullscreen = new FullScreen('.swiper-container', {
+      document.getElementById('btn1').addEventListener('click', function() {
+        console.log(1)
+      })
+
+      var fullscreen = new FullScreen('.fullscreen-container', {
         direction: 'vertical',
         on: {
           update: function() {
             console.log(12333)
+          },
+          slideChangeTransitionEnd: function() {
+            var len = this.slidesGrid.length
+            var activeIndex = this.activeIndex
+
+            if (activeIndex === len - 2) {
+              console.log('activeIndex -> ', activeIndex)
+
+              this.addSlide(
+                window.Infinity,
+                '<div class="fullscreen-slide">Slide ' + len + '</div>'
+              )
+            }
           }
         }
       })
 
-      setTimeout(function() {
-        fullscreen.addSlide(
-          window.Infinity,
-          '<div class="fs-slide swiper-slide">Slide X</div>'
-        )
-      }, 2e3)
+      // setTimeout(function() {
+      //   fullscreen.addSlide(
+      //     window.Infinity,
+      //     '<div class="fullscreen-slide">Slide X</div>'
+      //   )
+      // }, 2e3)
     </script>
   </body>
 </html>
