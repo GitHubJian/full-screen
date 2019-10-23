@@ -43,99 +43,135 @@
         width: 100%;
         height: 100%;
       }
+
+      #btn1 {
+        font-size: 50px;
+      }
+
+      #scenes {
+        height: 100%;
+        width: 100%;
+      }
+
+      /* #btn1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+      } */
+
+      #bfq,
+      #bofqi {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: red;
+        height: 100%;
+        width: 100%;
+      }
+      /* .fullscreen-slide {
+        z-index: 100;
+      } */
     </style>
   </head>
   <body>
-    <div class="scenes">
-      <div id="scenes1">
-        <div id="bofqi"></div>
-      </div>
-      <div
-        id="fullscreen"
-        class="scenes2 fullscreen-container fullscreen-container"
-      >
-        <div class="fullscreen-wrapper">
-          <div class="fullscreen-slide">
-            <div class="bofqi"></div>
-          </div>
-          <div class="fullscreen-slide">
-            <div class="bofqi"></div>
-            Slide 1
-          </div>
-          <div class="fullscreen-slide">
-            <div class="bofqi"></div>
-            Slide 2
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="btn1">点我</div>
+
+    <div
+      id="fullscreen"
+      class="fullscreen-container"
+      style="display: none;"
+    ></div>
 
     <script>
       var arr = [
         {
           video_url:
-            'http://1400094915.vod2.myqcloud.com/3df4ea08vodtransgzp1400094915/75419f405285890786975828136/v.f20.mp4',
-          image:
-            'http://img02.sogoucdn.com/app/a/200863/image_316081_1552993261234'
+            'http://resource.yaokan.sogoucdn.com/videodown/4506/127/12bacefa7ee910bd3de03ff50da178d6.mp4'
         },
         {
           video_url:
-            'http://resource.yaokan.sogoucdn.com/videodown/4506/127/12bacefa7ee910bd3de03ff50da178d6.mp4',
-          image:
-            'http://img01.sogoucdn.com/app/a/200883/cbf19d49e01d586bff022b962312927f'
+            'http://1400094915.vod2.myqcloud.com/3df4ea08vodtransgzp1400094915/75419f405285890786975828136/v.f20.mp4'
         }
       ]
+      var h5player
+      var bfq
+      var fs = document.getElementById('fullscreen')
 
-      var h5player = new window.H5Player()
-      // document.body.addEventListener(
-      //   'touchmove',
-      //   function(e) {
-      //     e.preventDefault() //阻止默认的处理方式(阻止下拉滑动的效果)
-      //   },
-      //   { passive: false }
-      // )
       var btn = document.getElementById('btn1')
       btn &&
-        btn.addEventListener('click', function() {
-          console.log(1)
+        btn.addEventListener('click', function(e) {
+          // 创建 fullscreen
+          var html =
+            '<div class="fullscreen-wrapper">' +
+            '<div id="bofqi"></div>' +
+            '<div class="fullscreen-slide">' +
+            '<div class="bofqi">Slide 0</div>' +
+            '<div style="width:100px;height:100px;background:blue">xxx</div>' +
+            '</div>' +
+            '<div class="fullscreen-slide">' +
+            '<div class="bofqi">Slide 1</div>' +
+            '</div>' +
+            '</div>'
+
+          e.target.style.display = 'none'
+
+          fs.innerHTML = html
+
+          fs.style.display = 'block'
+
+          bfq = document.getElementById('bofqi')
+
+          h5player = new window.H5Player()
+          h5player.set(arr[0])
+          h5player.play()
+          createFullscreen()
         })
 
-      var fullscreen = new FullScreen('.fullscreen-container', {
-        direction: 'vertical',
-        on: {
-          init: function() {
-            var firstSlide = this.slides && this.slides[0]
-            var bofqi = firstSlide.querySelector('.bofqi')
-            h5player.create({
-              el: bofqi
-            })
-            var info = arr[0]
-            h5player.setVideo(info)
-            h5player.play()
-          },
-          update: function() {},
-          slideChangeTransitionEnd: function() {
-            var activeIndex = this.activeIndex
-            if (activeIndex == this.slidesGrid.length - 2) {
-              this.addSlide(
+      function createFullscreen() {
+        var fullscreen = new FullScreen('.fullscreen-container', {
+          longSwipesRatio: 0.1,
+          on: {
+            tap: function(e) {
+              console.log('tap -> ', this.activeIndex)
+            },
+            // TODO: 什么时间隐藏当前 video 什么时机显示 video
+            slideChange: function() {},
+            transitionStart: function() {
+              // bfq.style.display = 'none'
+            },
+            transitionEnd: function() {
+              // bfq.style.display = 'block'
+            },
+            slideChangeTransitionEnd: function() {
+              var that = this
+              var $bfq = this.$('#bofqi')
+
+              var activeIndex = this.activeIndex
+
+              var len = this.slidesGrid.length
+              var y = this.slidesGrid[this.activeIndex]
+              // $bfq[0].style.top = -y + 'px'
+              $bfq.transition(0)
+              $bfq.transform(
+                'translate3d(' + 0 + 'px, ' + y + 'px, ' + 0 + 'px)'
+              )
+
+              var videoIndex = activeIndex % 2
+
+              // h5player.destroy()
+              // h5player.create()
+              h5player.set(arr[videoIndex])
+              h5player.play()
+
+              that.addSlide(
                 window.Infinity,
-                '<div class="fullscreen-slide"><div class="bofqi"></div>Slide ' +
-                  this.slidesGrid.length +
-                  '</div>'
+                '<div class="fullscreen-slide">Slide ' + len + '</div>'
               )
             }
-
-            var slide = this.slides && this.slides[activeIndex]
-            var bofqi = slide.querySelector('.bofqi')
-            h5player.create({
-              el: bofqi
-            })
-            var info = arr[activeIndex % 2]
-            h5player.setVideo(info)
-            h5player.play()
           }
-        }
-      })
+        })
+      }
     </script>
   </body>
 </html>

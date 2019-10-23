@@ -26,7 +26,6 @@
       .swiper-slide {
         text-align: center;
         font-size: 18px;
-        background: #fff;
 
         /* Center slide text vertically */
         display: -webkit-box;
@@ -42,6 +41,15 @@
         -webkit-align-items: center;
         align-items: center;
       }
+
+      #bfq {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: red;
+        width: 100%;
+        height: 100px;
+      }
     </style>
 
     <script src="js/swiper.js"></script>
@@ -49,15 +57,16 @@
   <body>
     <div id="fullscreen" class="fs-container swiper-container">
       <div class="fs-wrapper swiper-wrapper">
+        <div id="bfq"></div>
         <div class="fs-slide swiper-slide">
           <div id="btn1">点我</div>
+          Slide 0
+        </div>
+        <div class="fs-slide swiper-slide">
           Slide 1
         </div>
         <div class="fs-slide swiper-slide">
           Slide 2
-        </div>
-        <div class="fs-slide swiper-slide">
-          Slide 3
         </div>
       </div>
     </div>
@@ -70,6 +79,19 @@
             console.log(1)
           },
           slideChangeTransitionEnd: function() {
+            var that = this
+            var $bfq = this.$('#bfq')
+
+            var activeIndex = this.activeIndex
+            var len = this.slidesGrid.length
+            var y = this.slidesGrid[this.activeIndex]
+            that.addSlide(
+              window.Infinity,
+              '<div class="swiper-slide">Slide ' + len + '</div>'
+            )
+
+            $bfq.transition(300)
+            $bfq.transform('translate3d(' + 0 + 'px, ' + y + 'px, ' + 0 + 'px)')
           }
         }
       })
