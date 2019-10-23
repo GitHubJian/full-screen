@@ -6,29 +6,87 @@
     <link rel="stylesheet" href="static/css/fullscreen.css" />
 
     <style>
+      .ui-video {
+        position: relative;
+        height: 0;
+        padding-bottom: 56%;
+      }
+
+      .ui-video img,
+      .ui-video video {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center;
+        object-position: center;
+        background: #000;
+      }
+
       .fullscreen-slide {
         font-size: 40px;
-        background: #fff;
+      }
+
+      .scenes {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      #scenes1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
     </style>
   </head>
   <body>
-    <div id="fullscreen" class="fullscreen-container fullscreen-container">
-      <div class="fullscreen-wrapper">
-        <div class="fullscreen-slide">
-          <div id="btn1">点我</div>
-          Slide 0
-        </div>
-        <div class="fullscreen-slide">
-          Slide 1
-        </div>
-        <div class="fullscreen-slide">
-          Slide 2
+    <div class="scenes">
+      <div id="scenes1">
+        <div id="bofqi"></div>
+      </div>
+      <div
+        id="fullscreen"
+        class="scenes2 fullscreen-container fullscreen-container"
+      >
+        <div class="fullscreen-wrapper">
+          <div class="fullscreen-slide">
+            <div class="bofqi"></div>
+          </div>
+          <div class="fullscreen-slide">
+            <div class="bofqi"></div>
+            Slide 1
+          </div>
+          <div class="fullscreen-slide">
+            <div class="bofqi"></div>
+            Slide 2
+          </div>
         </div>
       </div>
     </div>
 
     <script>
+      var arr = [
+        {
+          video_url:
+            'http://1400094915.vod2.myqcloud.com/3df4ea08vodtransgzp1400094915/75419f405285890786975828136/v.f20.mp4',
+          image:
+            'http://img02.sogoucdn.com/app/a/200863/image_316081_1552993261234'
+        },
+        {
+          video_url:
+            'http://resource.yaokan.sogoucdn.com/videodown/4506/127/12bacefa7ee910bd3de03ff50da178d6.mp4',
+          image:
+            'http://img01.sogoucdn.com/app/a/200883/cbf19d49e01d586bff022b962312927f'
+        }
+      ]
+
+      var h5player = new window.H5Player()
       // document.body.addEventListener(
       //   'touchmove',
       //   function(e) {
@@ -36,39 +94,48 @@
       //   },
       //   { passive: false }
       // )
-
-      document.getElementById('btn1').addEventListener('click', function() {
-        console.log(1)
-      })
+      var btn = document.getElementById('btn1')
+      btn &&
+        btn.addEventListener('click', function() {
+          console.log(1)
+        })
 
       var fullscreen = new FullScreen('.fullscreen-container', {
         direction: 'vertical',
         on: {
-          update: function() {
-            console.log(12333)
+          init: function() {
+            var firstSlide = this.slides && this.slides[0]
+            var bofqi = firstSlide.querySelector('.bofqi')
+            h5player.create({
+              el: bofqi
+            })
+            var info = arr[0]
+            h5player.setVideo(info)
+            h5player.play()
           },
+          update: function() {},
           slideChangeTransitionEnd: function() {
-            var len = this.slidesGrid.length
             var activeIndex = this.activeIndex
-
-            if (activeIndex === len - 2) {
-              console.log('activeIndex -> ', activeIndex)
-
+            if (activeIndex == this.slidesGrid.length - 2) {
               this.addSlide(
                 window.Infinity,
-                '<div class="fullscreen-slide">Slide ' + len + '</div>'
+                '<div class="fullscreen-slide"><div class="bofqi"></div>Slide ' +
+                  this.slidesGrid.length +
+                  '</div>'
               )
             }
+
+            var slide = this.slides && this.slides[activeIndex]
+            var bofqi = slide.querySelector('.bofqi')
+            h5player.create({
+              el: bofqi
+            })
+            var info = arr[activeIndex % 2]
+            h5player.setVideo(info)
+            h5player.play()
           }
         }
       })
-
-      // setTimeout(function() {
-      //   fullscreen.addSlide(
-      //     window.Infinity,
-      //     '<div class="fullscreen-slide">Slide X</div>'
-      //   )
-      // }, 2e3)
     </script>
   </body>
 </html>

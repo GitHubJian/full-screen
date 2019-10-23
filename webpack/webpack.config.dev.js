@@ -17,6 +17,10 @@ module.exports = {
     fullscreen: [
       'webpack-dev-server/client?http://local.sogou.com:8424/',
       path.resolve(root, 'lib/index.js')
+    ],
+    h5player: [
+      'webpack-dev-server/client?http://local.sogou.com:8424/',
+      path.resolve(root, 'lib/h5player.js')
     ]
   },
   output: {
@@ -65,7 +69,7 @@ module.exports = {
       'process.env.VUE_ENV': '"client"',
       'process.env.buildTime': JSON.stringify(Date.now())
     }),
-    new webpack.EnvironmentPlugin({NODE_ENV: 'development'}),
+    new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.ModuleConcatenationPlugin(),
 
@@ -78,7 +82,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: pathConfig.templatePath,
-      chunks: ['fullscreen'],
+      chunks: ['fullscreen', 'h5player'],
       title: 'Full Screen Test',
       inject: 'head'
     })
