@@ -1,7 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- Apply 360 with Chrome-WebKit-Core -->
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- Disable Baidu-Transcoding -->
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="Sogou Feed" />
+
+    <title>搜狗搜索精彩小视频</title>
 
     <link rel="stylesheet" href="static/css/fullscreen.css" />
 
@@ -69,6 +88,10 @@
         height: 100%;
         width: 100%;
       }
+      .v-poster-img {
+        width: 100%;
+        height: 100%;
+      }
       /* .fullscreen-slide {
         z-index: 100;
       } */
@@ -86,12 +109,16 @@
     <script>
       var arr = [
         {
+          poster_url:
+            'http://img01.sogoucdn.com/v2/thumb/crop/xy/ai/w/570/h/750/t/0/retype/q/80/ext/auto?appid=200576&url=http%3A%2F%2Fimg02.sogoucdn.com%2Fapp%2Fa%2F200883%2F71fc22d54b440ecb0212ab592aed2048',
           video_url:
-            'http://resource.yaokan.sogoucdn.com/videodown/4506/127/12bacefa7ee910bd3de03ff50da178d6.mp4'
+            'http://resource.yaokan.sogoucdn.com/videodown/5e9f/751/b7bc51876352b0450537c46dad4121c4.mp4'
         },
         {
+          poster_url:
+            'http://img03.sogoucdn.com/app/a/200883/479928647adebb5838c2cff37d8c7588',
           video_url:
-            'http://1400094915.vod2.myqcloud.com/3df4ea08vodtransgzp1400094915/75419f405285890786975828136/v.f20.mp4'
+            'http://resource.yaokan.sogoucdn.com/videodown/5e9f/756/7d568f45025dcdb2a860777b4cbec9aa.mp4'
         }
       ]
       var h5player
@@ -106,11 +133,14 @@
             '<div class="fullscreen-wrapper">' +
             '<div id="bofqi"></div>' +
             '<div class="fullscreen-slide">' +
-            '<div class="bofqi">Slide 0</div>' +
-            '<div style="width:100px;height:100px;background:blue">xxx</div>' +
+            '<div class="poster"><img class="v-poster-img" src="' +
+            arr[0].poster_url +
+            '" /></div>' +
             '</div>' +
             '<div class="fullscreen-slide">' +
-            '<div class="bofqi">Slide 1</div>' +
+            '<div class="poster"><img class="v-poster-img" src="' +
+            arr[1].poster_url +
+            '" /></div>' +
             '</div>' +
             '</div>'
 
@@ -124,7 +154,7 @@
 
           h5player = new window.H5Player()
           h5player.set(arr[0])
-          h5player.play()
+
           createFullscreen()
         })
 
@@ -132,42 +162,61 @@
         var fullscreen = new FullScreen('.fullscreen-container', {
           longSwipesRatio: 0.1,
           on: {
+            init: function() {
+              var slide = this.$(this.slides[0])
+              slide.find('.v-poster-img').css('display', 'none')
+              h5player.play()
+            },
             tap: function(e) {
               console.log('tap -> ', this.activeIndex)
             },
             // TODO: 什么时间隐藏当前 video 什么时机显示 video
             slideChange: function() {},
-            transitionStart: function() {
-              // bfq.style.display = 'none'
-            },
+            transitionStart: function() {},
             transitionEnd: function() {
               // bfq.style.display = 'block'
             },
             slideChangeTransitionEnd: function() {
               var that = this
-              var $bfq = this.$('#bofqi')
 
-              var activeIndex = this.activeIndex
+              var slide = this.$(this.slides[this.activeIndex])
 
               var len = this.slidesGrid.length
               var y = this.slidesGrid[this.activeIndex]
-              // $bfq[0].style.top = -y + 'px'
+              var $bfq = this.$('#bofqi')
+              $bfq.css('display', 'none')
               $bfq.transition(0)
               $bfq.transform(
                 'translate3d(' + 0 + 'px, ' + y + 'px, ' + 0 + 'px)'
               )
 
-              var videoIndex = activeIndex % 2
+              setTimeout(function() {
+                slide.find('.v-poster-img').css('display', 'none')
+                $bfq.css('display', 'block')
+              }, 10)
 
-              // h5player.destroy()
-              // h5player.create()
-              h5player.set(arr[videoIndex])
+              var activeIndex = this.activeIndex
+
+              var len = this.slidesGrid.length
+              var y = this.slidesGrid[this.activeIndex]
+
+              $bfq.css('display', 'block')
+
+              var videoIndex = activeIndex % 2
+              var info = arr[videoIndex]
+              console.log(JSON.stringify(info))
+
+              h5player.set(info)
+              var nextInfo = arr[(activeIndex + 1) % 2]
+              // next
+              var html =
+                '<div class="fullscreen-slide"><div class="poster"><img class="v-poster-img" src="' +
+                nextInfo.poster_url +
+                '"/></div></div>'
+
               h5player.play()
 
-              that.addSlide(
-                window.Infinity,
-                '<div class="fullscreen-slide">Slide ' + len + '</div>'
-              )
+              that.addSlide(window.Infinity, html)
             }
           }
         })
